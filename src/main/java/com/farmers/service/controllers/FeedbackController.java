@@ -38,9 +38,11 @@ public class FeedbackController {
     @PostMapping("/save")
     public ResponseEntity<BasicResponseDTO<Feedback>> saveFeedback(@RequestBody FeedbackRequestDTO request){
         BasicResponseDTO<Feedback> response = new BasicResponseDTO<>(true, "Feedback saved", null);
-        Feedback feedback = mapper.map(request, Feedback.class);
-        feedback.setId(null);
+        Feedback feedback = new Feedback();
+        feedback.setRating(request.getRating());
+        feedback.setMobileNumber(request.getMobileNumber());
         feedback.setCreatedOn(new Date());
+        feedback.setReview(request.getReview());
         Optional<User> _user = userDAO.findById(request.getUserId());
         if(_user.isEmpty()){
             response.setMessage("User not found");
