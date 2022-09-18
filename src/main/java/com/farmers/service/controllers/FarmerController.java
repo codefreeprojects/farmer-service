@@ -14,6 +14,7 @@ import com.farmers.service.services.FilesStorageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -50,9 +51,11 @@ public class FarmerController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @Value("${files.upload.url}")
     private String uploadUrl;
     private ModelMapper mapper = new ModelMapper();
+
 
     @Operation( description = "show all seeds", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("/all-seeds")
@@ -159,6 +162,7 @@ public class FarmerController {
     @Transactional
     @PostMapping("/common/place-order")
     public ResponseEntity<BasicResponseDTO<ProductOrder>> placeOrder( @RequestBody SaveOrderDTO request){
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         BasicResponseDTO<ProductOrder> response = new BasicResponseDTO<>(true, "Product Order added", null);
         Optional<User> _user = userDAO.findById(request.getUserId());
         Optional<Product> _product = productDAO.findById(request.getProductId());
