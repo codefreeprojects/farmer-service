@@ -79,7 +79,7 @@ public class FeedbackController {
             response.setMessage("Feedbacks not found");
             return ResponseEntity.ok().body(response);
         }
-        Page<Feedback> feedback = feedbackDAO.findAllByUser( _user.get(),PageRequest.of(request.getPage(), request.getSize()));
+        Page<Feedback> feedback = feedbackDAO.findAllByProductUser( _user.get(),PageRequest.of(request.getPage(), request.getSize()));
         response.setData(feedback);
         return ResponseEntity.ok().body(response);
     }

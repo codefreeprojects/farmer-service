@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FeedbackDAO extends JpaRepository<Feedback, Long> {
     Page<Feedback> findAllByUser(User user, Pageable pageable);
+    Page<Feedback> findAllByProductUser(User user, Pageable pageable);
 }
