@@ -152,6 +152,7 @@ public class FarmerController {
             response.setMessage("File upload failed");
             return ResponseEntity.ok(response);
         }
+        product.setId(null);
         product.setImageUrl(uploadUrl+ _fileName.get());
         productDAO.save(product);
         response.setData(product);
@@ -172,6 +173,7 @@ public class FarmerController {
             return ResponseEntity.ok(response);
         }
         ProductOrder order = mapper.map(request, ProductOrder.class);
+        order.setId(null);
         order.setUser(_user.get());
         order.setProduct(_product.get());
         order.setDeliveryStatus(false);
@@ -179,6 +181,7 @@ public class FarmerController {
         productOrderDAO.save(order);
         if(request.getHaveVehicle()){
             Vehicle vehicle = mapper.map(request.getVehicleDetails(), Vehicle.class);
+            vehicle.setId(null);
             vehicle.setProductOrder(order);
             vehicleDAO.save(vehicle);
         }
