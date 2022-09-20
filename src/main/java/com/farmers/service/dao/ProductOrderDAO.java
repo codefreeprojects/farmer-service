@@ -8,10 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ProductOrderDAO extends JpaRepository<ProductOrder, Long> {
     Page<ProductOrder> findAllByUser(User user, Pageable pageable);
     Optional<ProductOrder> findByProduct(Product product);
+    List<ProductOrder> findAllByProduct(Product product);
+    void deleteAllByProduct(Product product);
 }
